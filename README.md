@@ -21,7 +21,7 @@ graph TD
     State -->|Confirm Quotation| API_Confirm[POST /api/quotations]
     
     UI -->|Download PDF| API_PDF[GET /api/quotations/:id/pdf]
-    API_PDF -->|renderToStream| PDF_Gen[@react-pdf/renderer]
+    API_PDF -->|renderToStream| PDF_Gen["@react-pdf/renderer"]
     
     API_Confirm <--> ORM[Prisma Client]
     API_PDF <--> ORM
