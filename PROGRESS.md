@@ -47,3 +47,22 @@ pm run build\) passes all TypeScript and ESLint checks.
 
 **Next phase to start:** Phase 2 — Admin Package Management
 
+
+## [Phase 2] - Package Data & Admin View - COMPLETED 2026-07-28
+
+**What was built:**
+- Installed `table` and `badge` components via shadcn/ui.
+- Updated `prisma/seed.ts` with 8 realistic travel packages and a sample Quotation for Admin visualization.
+- Executed seed script to populate database.
+- Built data access layer for quotations (`lib/data/quotations.ts`) to fetch quotations for Admin.
+- Transformed `app/(admin)/admin/page.tsx` into a Server Component fetching actual database records.
+- Displayed 'Packages Inventory' and 'All Agent Quotations' using cleanly styled shadcn tables and badges.
+
+**Key decisions/deviations from plan.md:**
+- Added a dummy DRAFT quotation in the seed script tied to Agent 1. This ensures the 'All Agent Quotations' table is populated for immediate visual verification on the dashboard without waiting for Phase 3.
+
+**Verified working:**
+- Dashboard renders perfectly at `/admin` with correct JIT Tailwind CSS.
+- Both tables populate dynamically from the seeded PostgreSQL database via Server Components.
+
+**Next phase to start:** Phase 3 - Agent Quotation Builder
