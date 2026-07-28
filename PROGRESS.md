@@ -66,3 +66,22 @@ pm run build\) passes all TypeScript and ESLint checks.
 - Both tables populate dynamically from the seeded PostgreSQL database via Server Components.
 
 **Next phase to start:** Phase 3 - Agent Quotation Builder
+
+## [Phase 3] - Agent Quotation Builder - COMPLETED 2026-07-28
+
+**What was built:**
+- Modified Agent Dashboard (`app/(agent)/agent/page.tsx`) to display a table of the logged-in agent's past quotations, with a link to create new ones.
+- Built a comprehensive Quotation Builder page (`app/(agent)/agent/quote/new/page.tsx` & `BuilderClient.tsx`).
+- Implemented dynamic live price calculations showing base cost plus commission markup.
+- Created a backend API route (`app/api/quotations/route.ts`) to securely save the calculated quotations as DRAFT status to PostgreSQL.
+- Developed a Quotation Detail page (`app/(agent)/agent/quotations/[id]/page.tsx`) that provides a clean, itemized breakdown of a saved quotation, protected by role-based authorization.
+
+**Key decisions/deviations from plan.md:**
+- Shifted state management for the quotation builder entirely into a Client Component (`BuilderClient.tsx`) to ensure snappy, optimistic UI updates while preserving the server-component fetching pattern for initial package load.
+
+**Verified working:**
+- Agents can browse packages, adjust quantities/days, see live totals, and save quotes.
+- Saved quotes properly map to the DB, retaining accurate unit prices reflecting the agent's commission.
+- Admins can view ANY quote detail page, while Agents can only view their OWN quotes.
+
+**Next phase to start:** Phase 4 - Quotation Status & Email (Optional)
