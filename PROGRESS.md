@@ -22,3 +22,28 @@
 - The app has not yet been deployed to Vercel (can be done continuously or at the end).
 
 **Next phase to start:** Phase 1 â€” Auth & Roles
+
+## [Phase 1] — Auth & Roles — COMPLETED 2026-07-28
+
+**What was built:**
+- Installed \
+ext-auth\ and \cryptjs\.
+- Created a database seed script (\prisma/seed.ts\) and successfully seeded 1 Admin and 2 Agent users with varying commission rates.
+- Set up NextAuth configuration (\lib/auth.ts\) using the Credentials provider to authenticate users against the Prisma database.
+- Implemented role-based routing in \middleware.ts\ to protect \/admin\ and \/agent\ routes.
+- Created a login page UI (\components/auth/LoginForm.tsx\) using shadcn/ui components (Card, Input, Label, Button).
+- Built basic dashboard layout shells for the Admin and Agent portals, including a functional Sign Out button.
+
+**Key decisions/deviations from plan.md:**
+- Had to install \dotenv\ and configure \package.json\ to explicitly load \.env\ in the Prisma seed script so that \DATABASE_URL\ is injected correctly into the \	s-node\ process.
+- Fixed a malformed \DATABASE_URL\ string inside the \.env\ file.
+- Used local UI components instead of importing heavy third-party layout libraries. 
+
+**Verified working:**
+- Database successfully populated via \
+px prisma db seed\.
+- Production build (\
+pm run build\) passes all TypeScript and ESLint checks.
+
+**Next phase to start:** Phase 2 — Admin Package Management
+
