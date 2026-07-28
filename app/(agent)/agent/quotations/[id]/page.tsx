@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import QuotationActions from "./QuotationActions";
 
 export default async function QuotationDetailPage({ params }: { params: { id: string } }) {
   const session = await getServerSession(authOptions);
@@ -35,23 +36,30 @@ export default async function QuotationDetailPage({ params }: { params: { id: st
 
   return (
     <div className="space-y-8 max-w-5xl mx-auto">
-      <div className="flex items-center gap-4">
-        <Link href={session.user.role === "ADMIN" ? "/admin" : "/agent"}>
-          <Button variant="outline" size="icon">
-            <ArrowLeft className="h-4 w-4" />
-          </Button>
-        </Link>
-        <div>
-          <h2 className="text-2xl font-bold flex items-center gap-3">
-            Quotation #{quote.id.slice(-6).toUpperCase()}
-            <Badge variant={quote.status === "CONFIRMED" ? "default" : "secondary"}>
-              {quote.status}
-            </Badge>
-          </h2>
-          <p className="text-muted-foreground mt-1">
-            Created on {new Date(quote.createdAt).toLocaleDateString()} for {quote.customerName}
-          </p>
+      <div className="flex items-center justify-between gap-4">
+        <div className="flex items-center gap-4">
+          <Link href={session.user.role === "ADMIN" ? "/admin" : "/agent"}>
+            <Button variant="outline" size="icon">
+              <ArrowLeft className="h-4 w-4" />
+            </Button>
+          </Link>
+          <div>
+            <h2 className="text-2xl font-bold flex items-center gap-3">
+              Quotation #{quote.id.slice(-6).toUpperCase()}
+              <Badge variant={quote.status === "CONFIRMED" ? "default" : "secondary"}>
+                {quote.status}
+              </Badge>
+            </h2>
+            <p className="text-muted-foreground mt-1">
+              Created on {new Date(quote.createdAt).toLocaleDateString()} for {quote.customerName}
+            </p>
+          </div>
         </div>
+        <QuotationActions 
+          quoteId={quote.id} 
+          initialStatus={quote.status} 
+          isAgent={session.user.role === "AGENT"} 
+        />
       </div>
 
       <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700">

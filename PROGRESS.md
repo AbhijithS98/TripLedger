@@ -85,3 +85,22 @@ pm run build\) passes all TypeScript and ESLint checks.
 - Admins can view ANY quote detail page, while Agents can only view their OWN quotes.
 
 **Next phase to start:** Phase 4 - Quotation Status & Email (Optional)
+
+## [Phase 4] - Confirm -> PDF Voucher - COMPLETED 2026-07-28
+
+**What was built:**
+- Installed `@react-pdf/renderer` to generate server-side PDF documents in Next.js.
+- Created a secure API route (`PATCH /api/quotations/[id]/confirm`) allowing the owning agent to lock a DRAFT into a CONFIRMED state.
+- Designed the PDF layout using `Document`, `Page`, and React Native style primitives in `components/pdf/VoucherDocument.tsx`.
+- Developed the PDF generation API route (`GET /api/quotations/[id]/pdf`) which dynamically creates the document stream and sets the correct HTTP headers (`application/pdf`, `attachment`) for automatic browser downloading.
+- Integrated these features smoothly into the UI via the new Client Component `QuotationActions.tsx`.
+
+**Key decisions/deviations from plan.md:**
+- The PDF route strictly checks if a quote is `CONFIRMED` before generating the PDF to prevent early generation of unfinalized quotes.
+
+**Verified working:**
+- The agent detail page correctly swaps between 'Confirm Quotation' and 'Download PDF Voucher' based on state.
+- Confirming updates the PostgreSQL database successfully and disables further actions.
+- Generating the PDF successfully downloads a styled invoice file directly to the user's local machine.
+
+**Next phase to start:** Phase 5 - Polish & Interview-Readiness
