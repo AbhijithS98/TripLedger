@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  AGENT
+}
+
+enum QuotationStatus {
+  DRAFT
+  CONFIRMED
+}
+
+model User {
+  id             String       @id @default(cuid())
+  name           String
+  email          String       @unique
+  passwordHash   String
+  role           Role
+  commissionRate Float        @default(0.15) // only meaningful for AGENT
+  quotations     Quotation[]
+  createdAt      DateTime     @default(now())
+}
+
+model Package {
+  id                String   @id @default(cuid())
+  title             String
+  destination       String
+  nights            Int
+  baseSupplierCost  Float
+  description       String?
+  imageUrl          String?
+  createdAt         DateTime @default(now())
+  items             QuotationItem[]
+}
+
+model Quotation {
+  id             String            @id @default(cuid())
+  agent          User?             @relation(fields: [agentId], references: [id])
+  agentId        String?           
+  customerName   String
+  status         QuotationStatus   @default(DRAFT)
+  markupApplied  Float             
+  totalAmount    Float
+  items          QuotationItem[]
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+}
+
+model QuotationItem {
+  id           String     @id @default(cuid())
+  quotation    Quotation  @relation(fields: [quotationId], references: [id])
+  quotationId  String
+  package      Package    @relation(fields: [packageId], references: [id])
+  packageId    String
+  dayNumber    Int
+  quantity     Int        @default(1)
+  unitCost     Float      
+  unitPrice    Float      
+}
