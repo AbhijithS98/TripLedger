@@ -121,3 +121,16 @@ pm run build\) passes all TypeScript and ESLint checks.
 - Architecture diagram renders natively in GitHub's Markdown viewer.
 
 **Next phase to start:** Complete (MVP Finished)
+
+## [Feature] - Agent Signup Flow - COMPLETED 2026-07-29
+
+**What was built:**
+- Created a public `/signup` page mirroring the design of the login page.
+- Built a backend API route `POST /api/auth/signup` to handle agent registration securely.
+- Server-side logic explicitly forces the new user role to `AGENT`, hashes the password via bcryptjs, and handles the optional commission rate (defaulting to 15% if left blank).
+- Added a "New agent? Sign up" link to the login page.
+
+**Verified working:**
+- Tested creating an agent with a custom commission rate (20%) and confirmed successful creation.
+- Tested creating an agent with a blank commission rate and confirmed default fallback (15%).
+- Successfully logged in using the newly created accounts and landed exactly on the `/agent` dashboard.

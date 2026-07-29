@@ -3,10 +3,13 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+
+import { ArrowLeft } from "lucide-react";
 
 export function LoginForm() {
   const router = useRouter();
@@ -41,11 +44,18 @@ export function LoginForm() {
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto mt-20">
-      <CardHeader>
-        <CardTitle className="text-2xl font-bold text-center">TripLedger Login</CardTitle>
-        <CardDescription className="text-center">Enter your credentials to access the portal</CardDescription>
-      </CardHeader>
+    <div className="w-full max-w-md mx-auto mt-20">
+      <div className="mb-4">
+        <Link href="/" className="text-sm text-muted-foreground hover:text-foreground flex items-center gap-2 w-fit transition-colors">
+          <ArrowLeft className="h-4 w-4" />
+          Back to Home
+        </Link>
+      </div>
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-2xl font-bold text-center">TripLedger Login</CardTitle>
+          <CardDescription className="text-center">Enter your credentials to access the portal</CardDescription>
+        </CardHeader>
       <form onSubmit={handleSubmit}>
         <CardContent className="space-y-4">
           {error && (
@@ -75,12 +85,19 @@ export function LoginForm() {
             />
           </div>
         </CardContent>
-        <CardFooter>
+        <CardFooter className="flex flex-col space-y-4">
           <Button type="submit" className="w-full" disabled={loading}>
             {loading ? "Signing in..." : "Sign In"}
           </Button>
+          <div className="text-sm text-center text-muted-foreground w-full">
+            New agent?{" "}
+            <Link href="/signup" className="text-blue-600 hover:underline">
+              Sign up
+            </Link>
+          </div>
         </CardFooter>
       </form>
     </Card>
+    </div>
   );
 }
